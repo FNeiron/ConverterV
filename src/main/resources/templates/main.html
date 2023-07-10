@@ -14,24 +14,26 @@
     <form method="post">
         <input type="text" name="text" placeholder="Введите сообщение">
         <input type="text" name="tag" placeholder="Введите тег">
-        <<input type="hidden"
-                th:name="${_csrf.parameterName}"
-                th:value="${_csrf.token}"/>
+<!--        <input type="hidden"-->
+<!--                th:name="${_csrf.parameterName}"-->
+<!--                th:value="${_csrf.token}"/>-->
         <button type="submit">Добавить</button>
     </form>
 </div>
-<form method="post" action="filter">
-    <input type="text" name="filter">
-    <input type="hidden"
-           th:name="${_csrf.parameterName}"
-           th:value="${_csrf.token}"/>
+<form method="get" action="/main">
+    <input type="text" name="filter" th:value="${filter}">
+<!--    <input type="hidden"-->
+<!--           th:name="${_csrf.parameterName}"-->
+<!--           th:value="${_csrf.token}"/>-->
     <button type="submit">Найти</button>
 </form>
 <div>
 <tr th:each="message : ${messages}">
-    <td th:text="${message.id}">1</td>
+    <strong><td th:text="${message.id}">1</td></strong>
     <td th:text="${message.tag}">Text ...</td>
     <td th:text="${message.text}">Text ...</td>
+    <i><td th:text="${message.author.getUsername()}">Text ...</td></i>
+    <br>
 </tr>
 </div>
 </body>
