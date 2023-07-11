@@ -48,14 +48,12 @@ public class CalculateService {
         }
         //Если в БД отсутствует курс валют на сегодняшний день
         if (cr1 == null || cr2 == null) {
-            //Получение актуальной даты с сайта ЦБ с помощью сервиса парсинга XML
-            LocalDate actualDate = XMLService.getActualDate();
             //Получение "самой свежей" даты из БД
             LocalDate lastBaseDate = currencyRateRepo.findTopByOrderByIdDesc().getDate();
             System.out.println("Последняя дата из БД: " + lastBaseDate);
             //Если 2 полученные даты отличаются, в таблицу курсов базы данных добавляются актуальные курсы с сайта ЦБ
-            if (!actualDate.equals(lastBaseDate)) {
-                data = XMLService.parseRates(LocalDate.now());
+            if (!localDate.equals(lastBaseDate)) {
+                data = XMLService.parseRates(localDate);
                 for (CurrencyRate cr : data.getCurrencyRates()) {
                     if (cr.getCharCode().equals(firstCurrency)) {
                         cr1 = cr;
@@ -68,10 +66,10 @@ public class CalculateService {
             }
             //Если 2 полученные даты совпадают, курсы валют считываются из БД
             else {
-                Optional<CurrencyRate> opcr1 = currencyRateRepo.findByCharCodeAndDate(firstCurrency, actualDate);
+                Optional<CurrencyRate> opcr1 = currencyRateRepo.findByCharCodeAndDate(firstCurrency, localDate);
                 if (opcr1.isPresent())
                     cr1 = opcr1.get();
-                Optional<CurrencyRate> opcr2 = currencyRateRepo.findByCharCodeAndDate(secondCurrency, actualDate);
+                Optional<CurrencyRate> opcr2 = currencyRateRepo.findByCharCodeAndDate(secondCurrency, localDate);
                 if (opcr2.isPresent())
                     cr2 = opcr2.get();
             }

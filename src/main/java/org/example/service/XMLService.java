@@ -85,28 +85,4 @@ public class XMLService {
         }
         return null;
     }
-    public static LocalDate getActualDate() {
-        try {
-            String URL = "http://www.cbr.ru/scripts/XML_daily.asp";
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(URL);
-            doc.getDocumentElement().normalize();
-            NodeList nList = doc.getElementsByTagName("ValCurs");
-            Node n = nList.item(0);
-            LocalDate date = null;
-            if (n.getNodeType() == Node.ELEMENT_NODE) {
-                Element elem = (Element) n;
-                //Считывание даты
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-                date = LocalDate.parse((elem.getAttribute("Date")), formatter);
-                System.out.println("Актуальная дата xml:" + date);
-                return date;
-            }
-
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-        }
-        return null;
-    }
 }
