@@ -33,7 +33,7 @@ public class Application {
             //currencyRepo.save(new Currency("1", "111", "RUB", 1, "Российский рубль"));
             //currencyRepo.saveAll(data.getCurrencies());
             if(currencyRateRepo.findByCharCodeAndDate("USD", LocalDate.now()).isEmpty()) {
-                currencyRateRepo.save(new CurrencyRate("1", LocalDate.now(), "RUB", 1.0));
+                //currencyRateRepo.save(new CurrencyRate("1", LocalDate.now(), "RUB", 1.0));
                 currencyRateRepo.saveAll(data.getCurrencyRates());
             }
         };
