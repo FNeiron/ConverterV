@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Currencies</title>
+</head>
+<body>
+<a href="main">main page</a>
+<div>
+    <div th:text="${date}"></div>
+    <tr th:each="currencyRate : ${currencyRates}">
+        <strong><td th:text="${currencyRate.charCode}">1</td></strong>
+        <td th:text="${currencyRate.rate}">Text ...</td>
+        <br>
+    </tr>
+</div>
+</body>
+</html>

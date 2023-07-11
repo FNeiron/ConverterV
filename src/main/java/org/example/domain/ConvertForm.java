@@ -1,31 +1,11 @@
 package org.example.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class ConvertForm {
-    private String firstCurrency;
-    private String secondCurrency;
+    private String text;
+    private String tag;
     private double amount;
-
-    public String getFirstCurrency() {
-        return firstCurrency;
-    }
-
-    public void setFirstCurrency(String firstCurrency) {
-        this.firstCurrency = firstCurrency;
-    }
-
-    public String getSecondCurrency() {
-        return secondCurrency;
-    }
-
-    public void setSecondCurrency(String secondCurrency) {
-        this.secondCurrency = secondCurrency;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
 }

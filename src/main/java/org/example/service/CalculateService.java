@@ -92,7 +92,11 @@ public class CalculateService {
     public List<Message> getHistory(String firstCurrency, String secondCurrency, LocalDate date) {
         return messageRepo.findByTextAndTagAndDate(firstCurrency, secondCurrency, date);
     }
-    public Iterable <Currency> getAllCurrencies(){
+    public Iterable<Currency> getAllCurrencies(){
         return currencyRepo.findAll();
+    }
+
+    public Iterable<CurrencyRate> getAllCurrencyRatesToday(){
+        return currencyRateRepo.findByDate(LocalDate.now());
     }
 }
