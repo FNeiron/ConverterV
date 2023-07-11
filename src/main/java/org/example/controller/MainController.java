@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.domain.Message;
 import org.example.domain.User;
 import org.example.repos.MessageRepo;
+import org.example.service.CalculateService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +16,11 @@ import java.time.LocalDate;
 @Controller
 public class MainController {
     private final MessageRepo messageRepo;
+    private final CalculateService calculateService;
 
-    public MainController(MessageRepo messageRepo) {
+    public MainController(MessageRepo messageRepo, CalculateService calculateService) {
         this.messageRepo = messageRepo;
+        this.calculateService = calculateService;
     }
 
     @GetMapping("/")
@@ -43,8 +46,10 @@ public class MainController {
     @PostMapping("/main")
     public String add(
             @AuthenticationPrincipal User user,
-            @RequestParam String text, @RequestParam String tag, Model model) {
-        Message message = new Message(text, tag, 0, 0, LocalDate.now(), user);
+            @RequestParam String text, @RequestParam String tag, @RequestParam double amount, Model model) {
+
+        double res = calculateService.calculate(text, tag, amount, user);
+        Message message = new Message(text, tag, amount, res, LocalDate.now(), user);
 
         messageRepo.save(message);
         Iterable<Message> messages = messageRepo.findByAuthor(user);

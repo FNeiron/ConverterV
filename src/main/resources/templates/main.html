@@ -12,8 +12,9 @@
 </div>
 <div>
     <form method="post">
-        <input type="text" name="text" placeholder="Введите сообщение">
-        <input type="text" name="tag" placeholder="Введите тег">
+        <input type="text" name="text" placeholder="Введите исх. валюту">
+        <input type="text" name="tag" placeholder="Введите кон. валюту">
+        <input type="number" name="amount" placeholder="Введите количество">
 <!--        <input type="hidden"-->
 <!--                th:name="${_csrf.parameterName}"-->
 <!--                th:value="${_csrf.token}"/>-->
@@ -30,8 +31,11 @@
 <div>
 <tr th:each="message : ${messages}">
     <strong><td th:text="${message.id}">1</td></strong>
-    <td th:text="${message.tag}">Text ...</td>
     <td th:text="${message.text}">Text ...</td>
+    <td th:text="${message.tag}">Text ...</td>
+    <td th:text="${message.firstValue}">Text ...</td>
+    <td th:text="${message.secondValue}">Text ...</td>
+    <td th:text="${message.date}">Text ...</td>
     <i><td th:text="${message.author.getUsername()}">Text ...</td></i>
     <br>
 </tr>
