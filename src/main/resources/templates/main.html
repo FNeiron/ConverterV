@@ -17,7 +17,7 @@
             <option style="width: 300px" th:each="currency: ${currencies}" th:value="${currency.charCode}" th:utext="${currency.charCode} + ' (' +${currency.name} + ')'"></option>
         </select>
         <!--        <input type="text" name="text" placeholder="Введите исх. валюту">-->
-        <select name="tagп" style="width: 300px">
+        <select name="tag" style="width: 300px">
             <option style="width: 300px" th:each="currency: ${currencies}" th:value="${currency.charCode}" th:utext="${currency.charCode} + ' (' +${currency.name} + ')'"></option>
         </select>
         <input type="number" name="amount" placeholder="Введите количество">
