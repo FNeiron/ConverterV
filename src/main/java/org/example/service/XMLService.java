@@ -26,7 +26,8 @@ public class XMLService {
 
     public static DataFromXML parseRates() {
         try {
-            String URL = "http://www.cbr.ru/scripts/XML_daily.asp";
+            String URL = "http://www.cbr.ru/scripts/XML_daily.asp?date_req=" + LocalDate.now()
+                    .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(URL);

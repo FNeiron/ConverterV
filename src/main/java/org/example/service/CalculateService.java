@@ -33,14 +33,14 @@ public class CalculateService {
         CurrencyRate cr1 = null, cr2 = null;
         DataFromXML data;
         //Попытка получить курсы валют из таблицы курсов БД на сегодняшний день
-        Optional<CurrencyRate> ocr1 = currencyRateRepo.findByDateAndCharCode(currentDate, firstCurrency);
+        Optional<CurrencyRate> ocr1 = currencyRateRepo.findByCharCodeAndDate(firstCurrency, currentDate);
         if (ocr1.isPresent()) {
             cr1 = ocr1.get();
         }
         else if (firstCurrency.equals("RUB")) {
             cr1 = currencyRateRepo.findByCharCode("RUB");
         }
-        Optional<CurrencyRate> ocr2 = currencyRateRepo.findByDateAndCharCode(currentDate, secondCurrency);
+        Optional<CurrencyRate> ocr2 = currencyRateRepo.findByCharCodeAndDate(secondCurrency, currentDate);
         if (ocr2.isPresent()) {
             cr2 = ocr2.get();
         }
@@ -70,10 +70,10 @@ public class CalculateService {
             }
             //Если 2 полученные даты совпадают, курсы валют считываются из БД
             else {
-                Optional<CurrencyRate> opcr1 = currencyRateRepo.findByDateAndCharCode(actualDate, firstCurrency);
+                Optional<CurrencyRate> opcr1 = currencyRateRepo.findByCharCodeAndDate(firstCurrency, actualDate);
                 if (opcr1.isPresent())
                     cr1 = opcr1.get();
-                Optional<CurrencyRate> opcr2 = currencyRateRepo.findByDateAndCharCode(actualDate, secondCurrency);
+                Optional<CurrencyRate> opcr2 = currencyRateRepo.findByCharCodeAndDate(secondCurrency, actualDate);
                 if (opcr2.isPresent())
                     cr2 = opcr2.get();
             }

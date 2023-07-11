@@ -49,9 +49,9 @@ public class MainController {
             @RequestParam String text, @RequestParam String tag, @RequestParam double amount, Model model) {
 
         double res = calculateService.calculate(text, tag, amount, user);
-        Message message = new Message(text, tag, amount, res, LocalDate.now(), user);
+        //Message message = new Message(text, tag, amount, res, LocalDate.now(), user);
 
-        messageRepo.save(message);
+        //messageRepo.save(message);
         Iterable<Message> messages = messageRepo.findByAuthor(user);
         model.addAttribute("messages", messages);
         return "main";

@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @SpringBootApplication
 @EntityScan("org.example.domain")
@@ -29,10 +30,12 @@ public class Application {
         //При запуске приложения происходит считывание актуальных курсов валют с сайта ЦБ с помощью сервиса парсинга XML
         DataFromXML data = XMLService.parseRates();
         return args -> {
-            currencyRepo.save(new Currency("1", "111", "RUB", 1, "Российский рубль"));
-            currencyRepo.saveAll(data.getCurrencies());
-            currencyRateRepo.save(new CurrencyRate("1", LocalDate.now(), "RUB", 1.0));
-            currencyRateRepo.saveAll(data.getCurrencyRates());
+            //currencyRepo.save(new Currency("1", "111", "RUB", 1, "Российский рубль"));
+            //currencyRepo.saveAll(data.getCurrencies());
+            if(currencyRateRepo.findByCharCodeAndDate("USD", LocalDate.now()).isEmpty()) {
+                currencyRateRepo.save(new CurrencyRate("1", LocalDate.now(), "RUB", 1.0));
+                currencyRateRepo.saveAll(data.getCurrencyRates());
+            }
         };
     }
 }

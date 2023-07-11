@@ -7,7 +7,8 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public interface CurrencyRateRepo extends CrudRepository<CurrencyRate, String> {
-    Optional<CurrencyRate> findByDateAndCharCode(LocalDate date, String charCode);
+    Optional<CurrencyRate> findByCharCodeAndDate(String charCode, LocalDate date);
     CurrencyRate findByCharCode(String charCode);
     CurrencyRate findTopByOrderByIdDesc();
+    CurrencyRate findFirstByCharCode(String charCode);
 }
