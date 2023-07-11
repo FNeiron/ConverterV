@@ -54,9 +54,6 @@ public class MainController {
 
         double res = calculateService.calculate(convertForm.getText(), convertForm.getTag(),
                 convertForm.getAmount(), user);
-        //Message message = new Message(text, tag, amount, res, LocalDate.now(), user);
-
-        //messageRepo.save(message);
         Iterable<Message> messages = messageRepo.findByAuthor(user);
         model.addAttribute("messages", messages);
         model.addAttribute("currencies", calculateService.getAllCurrencies());

@@ -57,7 +57,7 @@ public class CalculateService {
             System.out.println("Последняя дата из БД: " + lastBaseDate);
             //Если 2 полученные даты отличаются, в таблицу курсов базы данных добавляются актуальные курсы с сайта ЦБ
             if (!actualDate.equals(lastBaseDate)) {
-                data = XMLService.parseRates();
+                data = XMLService.parseRates(LocalDate.now());
                 for (CurrencyRate cr : data.getCurrencyRates()) {
                     if (cr.getCharCode().equals(firstCurrency)) {
                         cr1 = cr;
@@ -80,8 +80,8 @@ public class CalculateService {
         }
         System.out.println("cr1" + cr1 + "cr2" + cr2);
         //Вычисление резульатата конвертации
-        double res = amount*cr1.getRate()/n1/cr2.getRate()*n2;
-        res = Math.round(res*100.0)/100.0;
+        double res = amount * cr1.getRate() / n1 / cr2.getRate() * n2;
+        res = Math.round(res * 100.0) / 100.0;
         Message conversion = new Message(c1.getCharCode(), c2.getCharCode(), amount, res, currentDate, user);
         System.out.println(conversion);
         //Сохранение конвертации в таблице истории конвертаций БД

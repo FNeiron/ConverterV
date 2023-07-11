@@ -24,9 +24,9 @@ import java.util.List;
 public class XMLService {
     private static final Logger logger = LoggerFactory.getLogger(XMLService.class);
 
-    public static DataFromXML parseRates() {
+    public static DataFromXML parseRates(LocalDate dateToParse) {
         try {
-            String URL = "http://www.cbr.ru/scripts/XML_daily.asp?date_req=" + LocalDate.now()
+            String URL = "http://www.cbr.ru/scripts/XML_daily.asp?date_req=" + dateToParse
                     .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -34,12 +34,12 @@ public class XMLService {
             doc.getDocumentElement().normalize();
             NodeList nList = doc.getElementsByTagName("ValCurs");
             Node n = nList.item(0);
-            LocalDate date = null;
+            LocalDate date = dateToParse;
             if (n.getNodeType() == Node.ELEMENT_NODE) {
                 Element elem = (Element) n;
                 //Считывание даты
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-                date = LocalDate.parse((elem.getAttribute("Date")), formatter);
+                //date = LocalDate.parse((elem.getAttribute("Date")), formatter);
             }
 
             //Считать список валют

@@ -28,7 +28,7 @@ public class Application {
     @Bean
     ApplicationRunner init(CurrencyRepo currencyRepo, CurrencyRateRepo currencyRateRepo){
         //При запуске приложения происходит считывание актуальных курсов валют с сайта ЦБ с помощью сервиса парсинга XML
-        DataFromXML data = XMLService.parseRates();
+        DataFromXML data = XMLService.parseRates(LocalDate.now());
         return args -> {
             //currencyRepo.save(new Currency("1", "111", "RUB", 1, "Российский рубль"));
             //currencyRepo.saveAll(data.getCurrencies());
