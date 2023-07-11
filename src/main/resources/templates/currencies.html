@@ -8,6 +8,12 @@
 <a href="main">main page</a>
 <div>
     <div th:text="${date}"></div>
+    <div>
+        <form method="post" action="/currencies">
+            <input type="date" name="date" required th:max="${maxDate}">
+            <button type="submit">Обновить</button>
+        </form>
+    </div>
     <tr th:each="currencyRate : ${currencyRates}">
         <strong><td th:text="${currencyRate.charCode}">1</td></strong>
         <td th:text="${currencyRate.rate}">Text ...</td>

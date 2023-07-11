@@ -92,7 +92,11 @@ public class CalculateService {
         return currencyRepo.findAll();
     }
 
-    public Iterable<CurrencyRate> getAllCurrencyRatesToday(){
-        return currencyRateRepo.findByDate(LocalDate.now());
+    public Iterable<CurrencyRate> getAllCurrencyRatesByDay(LocalDate date){
+        if(date == null) date = LocalDate.now();
+        List<CurrencyRate> data = currencyRateRepo.findByDate(date);
+        if(data == null || data.isEmpty())
+            data = XMLService.parseRates(date).getCurrencyRates();
+        return data;
     }
 }
