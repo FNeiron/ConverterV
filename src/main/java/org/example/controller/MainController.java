@@ -59,6 +59,7 @@ public class MainController {
         //messageRepo.save(message);
         Iterable<Message> messages = messageRepo.findByAuthor(user);
         model.addAttribute("messages", messages);
+        model.addAttribute("currencies", calculateService.getAllCurrencies());
         return "main";
     }
 }
