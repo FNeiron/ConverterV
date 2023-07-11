@@ -23,33 +23,31 @@ public class CalculateService {
         this.messageRepo = messageRepo;
     }
 
-    public double calculate(String firstCurrency, String secondCurrency, double amount, User user) {
-//Получение информации о валютах из таблицы валют БД
+    public double calculate(String firstCurrency, String secondCurrency, double amount, User user, LocalDate localDate) {
+        //Получение информации о валютах из таблицы валют БД
+        if (localDate == null) localDate = LocalDate.now();
         Currency c1 = currencyRepo.findByCharCode(firstCurrency);
         int n1 = c1.getNominal();
         Currency c2 = currencyRepo.findByCharCode(secondCurrency);
         int n2 = c2.getNominal();
-        LocalDate currentDate = LocalDate.now();
+        LocalDate currentDate = localDate;
         CurrencyRate cr1 = null, cr2 = null;
         DataFromXML data;
         //Попытка получить курсы валют из таблицы курсов БД на сегодняшний день
         Optional<CurrencyRate> ocr1 = currencyRateRepo.findByCharCodeAndDate(firstCurrency, currentDate);
         if (ocr1.isPresent()) {
             cr1 = ocr1.get();
-        }
-        else if (firstCurrency.equals("RUB")) {
+        } else if (firstCurrency.equals("RUB")) {
             cr1 = currencyRateRepo.findByCharCode("RUB");
         }
         Optional<CurrencyRate> ocr2 = currencyRateRepo.findByCharCodeAndDate(secondCurrency, currentDate);
         if (ocr2.isPresent()) {
             cr2 = ocr2.get();
-        }
-
-        else if (secondCurrency.equals("RUB")) {
+        } else if (secondCurrency.equals("RUB")) {
             cr2 = currencyRateRepo.findByCharCode("RUB");
         }
         //Если в БД отсутствует курс валют на сегодняшний день
-        if (cr1 == null || cr2 == null){
+        if (cr1 == null || cr2 == null) {
             //Получение актуальной даты с сайта ЦБ с помощью сервиса парсинга XML
             LocalDate actualDate = XMLService.getActualDate();
             //Получение "самой свежей" даты из БД

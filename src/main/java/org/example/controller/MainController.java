@@ -42,6 +42,7 @@ public class MainController {
         model.addAttribute("messages", messages);
         model.addAttribute("currencies", calculateService.getAllCurrencies());
         model.addAttribute("filter", filter);
+        model.addAttribute("maxDate", LocalDate.now());
         model.addAttribute("convertForm", new ConvertForm());
         return "main";
     }
@@ -50,12 +51,12 @@ public class MainController {
     public String add(
             @AuthenticationPrincipal User user,
             //@RequestParam(value = "text") String text, @RequestParam String tag, @RequestParam double amount,
-            @ModelAttribute ConvertForm convertForm, Model model) {
-
+            @ModelAttribute ConvertForm convertForm, @RequestParam(required = false) LocalDate date, Model model) {
         double res = calculateService.calculate(convertForm.getText(), convertForm.getTag(),
-                convertForm.getAmount(), user);
+                convertForm.getAmount(), user, date);
         Iterable<Message> messages = messageRepo.findByAuthor(user);
         model.addAttribute("messages", messages);
+        model.addAttribute("maxDate", LocalDate.now());
         model.addAttribute("currencies", calculateService.getAllCurrencies());
         return "main";
     }
