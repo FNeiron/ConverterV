@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.example.domain.Role;
 import org.example.domain.User;
 import org.example.repos.UserRepo;
+import org.example.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,9 @@ import java.util.Collections;
 public class RegistrationController {
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    RegistrationService registrationService;
+
     @GetMapping("/registration")
     public String registration() {
         return "registration";
@@ -23,17 +27,10 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(User user, Model model) {
-        User userFromDb = userRepo.findByUsername(user.getUsername());
-
-        if (userFromDb != null) {
-            model.addAttribute("message", "User exists!");
-            return "registration";
+        if (registrationService.register(user)) {
+            return "redirect:/login";
         }
-
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
-        userRepo.save(user);
-
-        return "redirect:/login";
+        model.addAttribute("message", "User exists!");
+        return "registration";
     }
 }
