@@ -35,9 +35,9 @@ public class MainController {
             @RequestParam(required = false) String filter, Model model) {
         Iterable<Message> messages;
 
-        if(filter != null && !filter.isEmpty())
-            messages = messageRepo.findByTagAndAuthor(filter, user);
-        else
+        //if(filter != null && !filter.isEmpty())
+        //    messages = messageRepo.findByTagAndAuthor(filter, user);
+        //else
             messages = messageRepo.findByAuthor(user);
         model.addAttribute("messages", messages);
         model.addAttribute("currencies", calculateService.getAllCurrencies());

@@ -27,15 +27,15 @@
 <!--                th:value="${_csrf.token}"/>-->
         <button type="submit">Добавить</button>
     </form>
-</div>
-<form method="get" action="/main">
-    <input type="text" name="filter" th:value="${filter}">
-<!--    <input type="hidden"-->
-<!--           th:name="${_csrf.parameterName}"-->
-<!--           th:value="${_csrf.token}"/>-->
-    <button type="submit">Найти</button>
-</form>
-<div>
+<!--</div>-->
+<!--<form method="get" action="/main">-->
+<!--    <input type="text" name="filter" th:value="${filter}">-->
+<!--&lt;!&ndash;    <input type="hidden"&ndash;&gt;-->
+<!--&lt;!&ndash;           th:name="${_csrf.parameterName}"&ndash;&gt;-->
+<!--&lt;!&ndash;           th:value="${_csrf.token}"/>&ndash;&gt;-->
+<!--    <button type="submit">Найти</button>-->
+<!--</form>-->
+<!--<div>-->
 <tr th:each="message : ${messages}">
     <strong><td th:text="${message.id}">1</td></strong>
     <td th:text="${message.text}">Text ...</td>
